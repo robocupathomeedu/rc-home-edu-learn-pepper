@@ -28,21 +28,21 @@
 
 4. Set Pepper tablet
 
-Select `activity_main.xml` tab, select the device `Pepper 1.9` under 'Generic Phones and Tablets', select `Landscape` mode
+    Select `activity_main.xml` tab, select the device `Pepper 1.9` under 'Generic Phones and Tablets', select `Landscape` mode
 
 
 5. Build the project
 
         Build -> Make project
 
-or `CTRL-F9` or click on the build icon (green hammer).
+    or `CTRL-F9` or click on the build icon (green hammer).
 
 
 6. Run the emulator
 
         Tools -> Pepper SDK -> Emulator
 
-or click on the Emulator button in the toolbar.
+    or click on the Emulator button in the toolbar.
 
 
 7. Run the project
@@ -50,12 +50,12 @@ or click on the Emulator button in the toolbar.
 
         Run -> Run 'app'
 
-or `Shift+F10` or click on the run icon (green triangle).
+    or `Shift+F10` or click on the run icon (green triangle).
 
 
-7. Quit the project
+8. Quit the project
 
         Run -> Stop 'app'
 
-or `CTRL+F2` or click on the stop icon (red square).
+    or `CTRL+F2` or click on the stop icon (red square).
 

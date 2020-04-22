@@ -1,6 +1,6 @@
 # Simple activities for Pepper Android SDK
 
-## How to use them
+## How to run
 
 1. Create an Empty Application with Android Studio
 

@@ -23,10 +23,14 @@
             Target compatibility    1.8
 
 
-3. Replace the content of `MainActivity.java` with the content of corresponding files in this folder after the `package` statement. You must leave the `package` statement of the `MainActivity.java` file generated in your Android Studio and replace all the rest.
+3. Write `MainActivity.java`
+
+Replace the content of `MainActivity.java` with the content of the corresponding file in any of the folders in this repository, except the `package` statement. 
+
+You must leave the `package` statement of the `MainActivity.java` file generated in your Android Studio and replace all the rest.
 
 
-4. Set Pepper tablet
+4. Set Pepper tablet layout
 
     Select `activity_main.xml` tab, select the device `Pepper 1.9` under 'Generic Phones and Tablets', select `Landscape` mode
 

@@ -1,3 +1,6 @@
+// Leave package statement as defined by your project
+// as first line of this file and replace all the rest
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;

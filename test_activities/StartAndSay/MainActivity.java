@@ -1,4 +1,5 @@
-package com.example.hellopepper;
+// Leave package statement as defined by your project
+// as first line of this file and replace all the rest
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -17,7 +18,7 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
     // The QiContext provided by the QiSDK.
     private QiContext qiContext = null;
 
-    private Say say_action1, say_action2;
+    private Say sayAction1, sayAction2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
         button = (Button)findViewById(R.id.button1);
         // Set the button onClick listener.
         button.setOnClickListener(v -> {
-            say_action2.async().run();
+            sayAction2.async().run();
         });
 
         // Register the RobotLifecycleCallbacks to this Activity.
@@ -45,7 +46,7 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
         // Store the provided QiContext.
         this.qiContext = qiContext;
         initActions();
-        say_action1.async().run();
+        sayAction1.async().run();
     }
 
     @Override
@@ -61,11 +62,11 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
 
     public void initActions() {
         // Create new say actions.
-        say_action1 = SayBuilder.with(this.qiContext) // Create the builder with the context.
+        sayAction1 = SayBuilder.with(this.qiContext) // Create the builder with the context.
                 .withText("Hello") // Set the text to say.
                 .build(); // Build the say action.
 
-        say_action2 = SayBuilder.with(qiContext) // Create the builder with the context.
+        sayAction2 = SayBuilder.with(qiContext) // Create the builder with the context.
                 .withText("OK. I am ready to start.") // Set the text to say.
                 .build(); // Build the say action.
     }

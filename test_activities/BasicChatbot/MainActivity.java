@@ -1,5 +1,4 @@
-// Leave package statement as defined by your project
-// as first line of this file and replace all the rest
+package com.example.basicchatbot;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +9,10 @@ import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.ChatBuilder;
 import com.aldebaran.qi.sdk.builder.QiChatbotBuilder;
-import com.aldebaran.qi.sdk.builder.SayBuilder;
 import com.aldebaran.qi.sdk.builder.TopicBuilder;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
 import com.aldebaran.qi.sdk.object.conversation.Chat;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
-import com.aldebaran.qi.sdk.object.conversation.Say;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
 
 public class MainActivity  extends RobotActivity implements RobotLifecycleCallbacks {
@@ -26,7 +23,6 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
     private QiContext qiContext = null;
 
     // Store the Chat action.
-    private Say sayAction;
     private Chat chatAction;
 
     @Override

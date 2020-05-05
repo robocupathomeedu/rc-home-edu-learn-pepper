@@ -1,0 +1,40 @@
+topic: ~greetings()
+
+# Concepts
+concept:(hello) ^rand[hello hi hey "good morning" greetings]
+concept:(whats-your-name) ["your name" "what name"]
+concept:(how-are-you) ["how are you" "how are you doing"]
+concept:(feel-good) ^rand[well super great fine ok good]
+concept:(feel-bad) ^rand[bad "not well" "not good" "tired"]
+concept:(my-name) ^rand["my name is" "I am" "I'm"]
+concept:(bye) ^rand["bye" "bye bye" "good bye" "see you soon"]
+
+concept:(bring) [bring get take]
+concept:(bringme) ["{can you} {please} ~bring {me} {some} {a}"]
+
+# Rules
+u:(~hello) ~hello ^nextProposal
+u:(~whats-your-name) ^rand[~my-name] Pepper
+u:(~how-are-you) ~feel-good
+
+u:(~my-name _*) Hi $1, nice to meet you $Name=$1
+u:(~bye) ^first["~bye $Name" ~bye]
+
+u:(~bringme _*) OK. Which kind of $1 would you like?
+  u1:(_*) Sure. I can bring you $1
+
+
+proposal: How are you?
+  u1:(~feel-good) Great.
+  u1:(~feel-bad) Oh. I am sorry.
+
+proposal: What is your name?
+  u1:(_*) Hi $1, Nice to meet you $Name=$1
+
+proposal: Would you like some drink?
+  u1:(coke) Yes, I have coke
+  u1:(beer) Sorry, I do not have beer ^stayInScope
+  u1:(wine) Do you prefer red or white?
+    u2:(red) OK. Here is some red wine
+    u2:(white) OK. White wine is coming in a while
+  u1:([no nothing]) OK. No worries.

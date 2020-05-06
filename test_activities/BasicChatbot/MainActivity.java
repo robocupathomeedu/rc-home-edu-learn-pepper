@@ -2,6 +2,7 @@ package com.example.basicchatbot;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -12,12 +13,16 @@ import com.aldebaran.qi.sdk.builder.QiChatbotBuilder;
 import com.aldebaran.qi.sdk.builder.TopicBuilder;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
 import com.aldebaran.qi.sdk.object.conversation.Chat;
+import com.aldebaran.qi.sdk.object.conversation.QiChatVariable;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
 
 public class MainActivity  extends RobotActivity implements RobotLifecycleCallbacks {
 
     private static final String TAG ="MainActivty";
+
+    // Textview element in the GUI
+    private TextView textView;
 
     // The QiContext provided by the QiSDK.
     private QiContext qiContext = null;
@@ -29,6 +34,7 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textView = (TextView)findViewById(R.id.textView1);
         // Register the RobotLifecycleCallbacks to this Activity.
         QiSDK.register(this, this);
     }
@@ -89,6 +95,17 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
 
         // Add an on started listener to the Chat action.
         chatAction.addOnStartedListener(() -> Log.i(TAG, "Discussion started."));
+
+
+        // Set up a listener for a chat variable
+        QiChatVariable nameVariable = qiChatbot.variable("Name");
+
+        nameVariable.addOnValueChangedListener(
+                currentValue -> {
+                    Log.i(TAG, "Chat var Name: " + currentValue);
+                    textView.setText("Hello " + currentValue);
+                }
+        );
 
     }
 

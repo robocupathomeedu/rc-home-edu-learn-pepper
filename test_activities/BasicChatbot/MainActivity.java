@@ -79,6 +79,12 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
         // The robot focus is refused.
     }
 
+    private void textViewSetValue(String textvalue) {
+        runOnUiThread(() -> {
+            textView.setText(textvalue);
+        });
+    }
+    
     public void initActions() {
         // Create a chat topic
         Topic topic = TopicBuilder.with(qiContext) // Create the builder using the QiContext.
@@ -103,7 +109,7 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
         nameVariable.addOnValueChangedListener(
                 currentValue -> {
                     Log.i(TAG, "Chat var Name: " + currentValue);
-                    textView.setText("Hello " + currentValue);
+                    textViewSetValue("Hello " + currentValue);
                 }
         );
 

@@ -25,16 +25,16 @@ u:(~bringme _*) OK. Which kind of $1 would you like?
 
 
 proposal: How are you?
-  u1:(~feel-good) Great.
-  u1:(~feel-bad) Oh. I am sorry.
+  u1:(~feel-good) Great. %feelgood
+  u1:(~feel-bad) Oh. I am sorry. %feelbad
 
 proposal: What is your name?
   u1:(_*) Hi $1, Nice to meet you $Name=$1
 
 proposal: Would you like some drink?
-  u1:(coke) Yes, I have coke
+  u1:(coke) Yes, I have coke $Drink=coke
   u1:(beer) Sorry, I do not have beer ^stayInScope
-  u1:(wine) Do you prefer red or white?
+  u1:(wine) Do you prefer red or white? $Drink=wine
     u2:(red) OK. Here is some red wine
     u2:(white) OK. White wine is coming in a while
   u1:([no nothing]) OK. No worries.

@@ -1,17 +1,28 @@
 package com.example.basicchatbot;
 
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
+import com.aldebaran.qi.sdk.builder.AnimateBuilder;
+import com.aldebaran.qi.sdk.builder.AnimationBuilder;
 import com.aldebaran.qi.sdk.builder.ChatBuilder;
 import com.aldebaran.qi.sdk.builder.QiChatbotBuilder;
 import com.aldebaran.qi.sdk.builder.TopicBuilder;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
+import com.aldebaran.qi.sdk.object.actuation.Animate;
+import com.aldebaran.qi.sdk.object.actuation.Animation;
 import com.aldebaran.qi.sdk.object.conversation.Chat;
 import com.aldebaran.qi.sdk.object.conversation.QiChatVariable;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
@@ -23,6 +34,7 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
 
     // Textview element in the GUI
     private TextView textView;
+    private ImageView imageView;
 
     // The QiContext provided by the QiSDK.
     private QiContext qiContext = null;
@@ -30,11 +42,15 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
     // Store the Chat action.
     private Chat chatAction;
 
+    // Animate actions
+    private Animate goodAnimAction, badAnimAction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView)findViewById(R.id.textView1);
+        imageView = (ImageView)findViewById(R.id.imageView1);
         // Register the RobotLifecycleCallbacks to this Activity.
         QiSDK.register(this, this);
     }
@@ -79,12 +95,20 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
         // The robot focus is refused.
     }
 
-    private void textViewSetValue(String textvalue) {
+    private void textViewSetValue(String val) {
         runOnUiThread(() -> {
-            textView.setText(textvalue);
+            textView.setText(val);
         });
     }
-    
+
+    private void imageViewSetValue(String val) {
+        if (val.equals("coke"))
+            runOnUiThread(() -> { imageView.setImageResource(R.drawable.coke); });
+        else if (val.equals("wine"))
+            runOnUiThread(() -> { imageView.setImageResource(R.drawable.wine); });
+
+    }
+
     public void initActions() {
         // Create a chat topic
         Topic topic = TopicBuilder.with(qiContext) // Create the builder using the QiContext.
@@ -112,6 +136,44 @@ public class MainActivity  extends RobotActivity implements RobotLifecycleCallba
                     textViewSetValue("Hello " + currentValue);
                 }
         );
+
+        // Set up a listener for a chat variable
+        QiChatVariable drinkVariable = qiChatbot.variable("Drink");
+
+        drinkVariable.addOnValueChangedListener(
+                currentValue -> {
+                    Log.i(TAG, "Chat var Drink: " + currentValue);
+                    imageViewSetValue(currentValue);
+                }
+        );
+
+
+        // Create animations
+        Animation animation_good = AnimationBuilder.with(qiContext) // Create the builder with the context.
+                .withResources(R.raw.nicereaction_a001) // Set the animation resource.
+                .build(); // Build the animation.
+        Animation animation_bad = AnimationBuilder.with(qiContext) // Create the builder with the context.
+                .withResources(R.raw.sad_a001) // Set the animation resource.
+                .build(); // Build the animation.
+
+        // Create animate actions
+        goodAnimAction = AnimateBuilder.with(qiContext) // Create the builder with the context.
+                .withAnimation(animation_good) // Set the animation.
+                .build(); // Build the animate action.
+
+        badAnimAction = AnimateBuilder.with(qiContext) // Create the builder with the context.
+            .withAnimation(animation_bad) // Set the animation.
+            .build(); // Build the animate action.
+
+        qiChatbot.addOnBookmarkReachedListener((bookmark) -> {
+            Log.i(TAG, "Bookmark event: " + bookmark.getName());
+            if (bookmark.getName().equals("feelgood")) {
+                goodAnimAction.async().run();
+            }
+            else if (bookmark.getName().equals("feelbad")) {
+                badAnimAction.async().run();
+            }
+        });
 
     }
 
